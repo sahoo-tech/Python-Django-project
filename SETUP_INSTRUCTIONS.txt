@@ -1,0 +1,40 @@
+DJANGO HEALTHCARE SYSTEM - SETUP INSTRUCTIONS
+================================================
+
+STEP 1: Install Dependencies
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install -r requirements.txt
+
+STEP 2: Create Database
+python manage.py makemigrations auth_app
+python manage.py migrate
+
+STEP 3: Create Superuser (Admin)
+python manage.py createsuperuser
+
+Follow the prompts and enter:
+- Email: admin@example.com
+- Username: admin
+- Password: (enter a secure password)
+
+STEP 4: Run Development Server
+python manage.py runserver
+
+STEP 5: Access Application
+- Home: http://127.0.0.1:8000/
+- Signup: http://127.0.0.1:8000/signup/
+- Login: http://127.0.0.1:8000/login/
+- Admin: http://127.0.0.1:8000/admin/
+
+IMPORTANT NOTES:
+- All signup data is saved to the database (db.sqlite3)
+- Login uses the saved data
+- Profiles are automatically created when signup happens
+- All errors are handled with validation messages
+
+TESTING:
+1. Go to /signup/
+2. Fill all fields and create an account
+3. Go to /login/ and login with your credentials
+4. You will see your dashboard with all saved information

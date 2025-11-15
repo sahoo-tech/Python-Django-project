@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %}Doctor Dashboard{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-3 mb-4">
+            <div class="card text-center">
+                {% if user.profile_picture %}
+                    <img src="{{ user.profile_picture.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+                {% else %}
+                    <div style="height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 4rem;">👨‍⚕️</span>
+                    </div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">Dr. {{ user.get_full_name }}</h5>
+                    <p class="card-text text-muted">{{ user.email }}</p>
+                    <span class="badge bg-success">Doctor</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Personal Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <strong>Name:</strong> {{ user.get_full_name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Email:</strong> {{ user.email }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Username:</strong> {{ user.username }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Member Since:</strong> {{ user.created_at|date:"M d, Y" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Address Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <strong>Address:</strong> {{ user.address_line1|default:"Not provided" }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <strong>City:</strong> {{ user.city|default:"Not provided" }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <strong>State:</strong> {{ user.state|default:"Not provided" }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <strong>Pincode:</strong> {{ user.pincode|default:"Not provided" }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% if doctor_profile %}
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Professional Information</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <strong>Specialization:</strong> {{ doctor_profile.get_specialization_display|default:"Not specified" }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>License Number:</strong> {{ doctor_profile.license_number|default:"Not provided" }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Experience:</strong> {{ doctor_profile.experience_years|default:"N/A" }} years
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <strong>Consultation Fee:</strong> ₹{{ doctor_profile.consultation_fee|default:"N/A" }}
+                        </div>
+                    </div>
+                    {% if doctor_profile.bio %}
+                    <div class="mb-3">
+                        <strong>Biography:</strong>
+                        <p>{{ doctor_profile.bio }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="mb-4">
+                <a href="{% url 'auth:edit_doctor_profile' %}" class="btn btn-primary">Edit Professional Information</a>
+                <a href="{% url 'auth:logout' %}" class="btn btn-secondary">Logout</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

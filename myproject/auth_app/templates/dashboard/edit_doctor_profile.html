@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Edit Doctor Profile{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="card-title mb-4">Edit Professional Information</h2>
+
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.specialization.label }}</label>
+                            {{ form.specialization }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.license_number.label }}</label>
+                            {{ form.license_number }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.experience_years.label }}</label>
+                            {{ form.experience_years }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.consultation_fee.label }}</label>
+                            {{ form.consultation_fee }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.bio.label }}</label>
+                            {{ form.bio }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Save Changes</button>
+                        <a href="{% url 'auth:doctor_dashboard' %}" class="btn btn-secondary btn-lg w-100 mt-2">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

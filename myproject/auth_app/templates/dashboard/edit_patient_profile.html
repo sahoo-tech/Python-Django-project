@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Edit Patient Profile{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="card-title mb-4">Edit Medical Information</h2>
+
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.medical_history.label }}</label>
+                            {{ form.medical_history }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.allergies.label }}</label>
+                            {{ form.allergies }}
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">{{ form.blood_group.label }}</label>
+                            {{ form.blood_group }}
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg w-100">Save Changes</button>
+                        <a href="{% url 'auth:patient_dashboard' %}" class="btn btn-secondary btn-lg w-100 mt-2">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

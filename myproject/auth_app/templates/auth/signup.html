@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}Sign Up - Healthcare System{% endblock %}
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card">
+                <div class="card-body p-5">
+                    <h2 class="card-title text-center mb-4">Create Your Account</h2>
+
+                    <form method="POST" enctype="multipart/form-data" novalidate>
+                        {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.first_name.label }}</label>
+                                {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.first_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.last_name.label }}</label>
+                                {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger small mt-1">{{ form.last_name.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.username.label }}</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger small mt-1">{{ form.username.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.email.label }}</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.user_type.label }}</label>
+                            {{ form.user_type }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.profile_picture.label }}</label>
+                            {{ form.profile_picture }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">{{ form.address_line1.label }}</label>
+                            {{ form.address_line1 }}
+                            {% if form.address_line1.errors %}
+                                <div class="text-danger small mt-1">{{ form.address_line1.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.city.label }}</label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="text-danger small mt-1">{{ form.city.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">{{ form.state.label }}</label>
+                                {{ form.state }}
+                                {% if form.state.errors %}
+                                    <div class="text-danger small mt-1">{{ form.state.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">{{ form.pincode.label }}</label>
+                                {{ form.pincode }}
+                                {% if form.pincode.errors %}
+                                    <div class="text-danger small mt-1">{{ form.pincode.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.password1.label }}</label>
+                                {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <div class="text-danger small mt-1">{{ form.password1.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">{{ form.password2.label }}</label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="text-danger small mt-1">{{ form.password2.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100 btn-lg">Create Account</button>
+                    </form>
+
+                    <div class="text-center mt-4">
+                        <p>Already have an account? <a href="{% url 'auth:login' %}">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

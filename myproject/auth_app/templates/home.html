@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Home - Healthcare System{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+        <div class="col-lg-8 text-center">
+            <h1 class="display-4 fw-bold mb-4">Welcome to Healthcare System</h1>
+            <p class="lead text-muted mb-5">A comprehensive platform connecting patients with healthcare professionals.</p>
+
+            {% if user.is_authenticated %}
+                <div>
+                    <p class="fs-5 mb-4">You are logged in as {{ user.get_full_name }}</p>
+                    {% if user.user_type == 'patient' %}
+                        <a href="{% url 'auth:patient_dashboard' %}" class="btn btn-primary btn-lg">Go to Patient Dashboard</a>
+                    {% else %}
+                        <a href="{% url 'auth:doctor_dashboard' %}" class="btn btn-primary btn-lg">Go to Doctor Dashboard</a>
+                    {% endif %}
+                </div>
+            {% else %}
+                <div class="row justify-content-center gap-3">
+                    <div class="col-auto">
+                        <a href="{% url 'auth:signup' %}" class="btn btn-primary btn-lg px-5">Create Account</a>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{% url 'auth:login' %}" class="btn btn-outline-primary btn-lg px-5">Login</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
