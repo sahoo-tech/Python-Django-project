@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">Update Doctor Profile</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h5 class="mb-3">Personal Information</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">First Name</label>
+                            <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Phone</label>
+                            <input type="text" name="phone" class="form-control" value="{{ user.phone }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Profile Image</label>
+                            <input type="file" name="profile_image" class="form-control">
+                        </div>
+                    </div>
+
+                    <h5 class="mb-3 mt-4">Professional Information</h5>
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% if field.errors %}
+                                <div class="text-danger">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <h5 class="mb-3 mt-4">Address</h5>
+                    <div class="row">
+                        <div class="col-md-12 mb-3">
+                            <label class="form-label">Address Line</label>
+                            <input type="text" name="address_line" class="form-control" value="{{ user.address_line }}">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">City</label>
+                            <input type="text" name="city" class="form-control" value="{{ user.city }}">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">State</label>
+                            <input type="text" name="state" class="form-control" value="{{ user.state }}">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Pincode</label>
+                            <input type="text" name="pincode" class="form-control" value="{{ user.pincode }}">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="{% url 'accounts:dashboard' %}" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

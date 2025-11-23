@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Doctor Dashboard</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body text-center">
+                {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" alt="Profile">
+                {% else %}
+                    <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px; font-size: 60px;">
+                        {{ user.first_name.0 }}{{ user.last_name.0 }}
+                    </div>
+                {% endif %}
+                <h4>Dr. {{ user.get_full_name }}</h4>
+                <p class="text-muted">{{ profile.get_specialization_display }}</p>
+                <p>{{ user.email }}</p>
+                <a href="{% url 'accounts:profile_update' %}" class="btn btn-primary">Update Profile</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Professional Information</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <strong>Specialization:</strong> {{ profile.get_specialization_display }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>License:</strong> {{ profile.medical_license }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Experience:</strong> {{ profile.years_of_experience }} years
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <strong>Fee:</strong> ₹{{ profile.consultation_fee }}
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <strong>Qualification:</strong> {{ profile.qualification|default:"Not specified" }}
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <strong>Bio:</strong><br>
+                        {{ profile.professional_bio|default:"No bio"|linebreaks }}
+                    </div>
+                    <div class="col-md-12 mb-3">
+                        <strong>Address:</strong><br>
+                        {% if user.address_line %}
+                            {{ user.address_line }}<br>
+                            {{ user.city }}, {{ user.state }} - {{ user.pincode }}
+                        {% else %}
+                            Not specified
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Total Posts</h5>
+                        <h2 class="text-primary">{{ total_posts }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5>Published</h5>
+                        <h2 class="text-success">{{ published_posts }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">Quick Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'blog:blog_create' %}" class="btn btn-success me-2">Create Post</a>
+                <a href="{% url 'blog:my_posts' %}" class="btn btn-outline-primary me-2">My Posts</a>
+                <a href="{% url 'accounts:profile_update' %}" class="btn btn-outline-primary">Update Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

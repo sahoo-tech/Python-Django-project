@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <article>
+            <div class="mb-4">
+                <h1>{{ post.title }}</h1>
+                <p class="text-muted">
+                    <span class="badge bg-primary">{{ post.category.name }}</span>
+                    By Dr. {{ post.author.get_full_name }} • {{ post.created_at|date:"F d, Y" }}
+                </p>
+            </div>
+
+            {% if post.featured_image %}
+                <img src="{{ post.featured_image.url }}" class="img-fluid rounded mb-4" alt="{{ post.title }}">
+            {% endif %}
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5>Summary</h5>
+                    <p class="lead">{{ post.summary }}</p>
+                </div>
+            </div>
+
+            <div class="content">
+                {{ post.content|linebreaks }}
+            </div>
+
+            <hr class="my-5">
+
+            <div class="card">
+                <div class="card-body">
+                    <h5>About the Author</h5>
+                    <div class="d-flex align-items-center">
+                        {% if post.author.profile_image %}
+                            <img src="{{ post.author.profile_image.url }}" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;" alt="Dr. {{ post.author.get_full_name }}">
+                        {% else %}
+                            <div class="rounded-circle bg-secondary text-white d-inline-flex align-items-center justify-content-center me-3" style="width: 80px; height: 80px; font-size: 30px;">
+                                {{ post.author.first_name.0 }}{{ post.author.last_name.0 }}
+                            </div>
+                        {% endif %}
+                        <div>
+                            <h6 class="mb-0">Dr. {{ post.author.get_full_name }}</h6>
+                            <p class="text-muted mb-0">{{ post.author.doctor_profile.get_specialization_display }}</p>
+                            <small>{{ post.author.doctor_profile.years_of_experience }} years experience</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary">← Back to Blogs</a>
+            </div>
+        </article>
+    </div>
+</div>
+{% endblock %}

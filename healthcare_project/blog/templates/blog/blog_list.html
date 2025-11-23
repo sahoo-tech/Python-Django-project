@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Health Blogs{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="mb-4">Health & Medical Blogs</h1>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="btn-group" role="group">
+            <a href="{% url 'blog:blog_list' %}" class="btn {% if not selected_category %}btn-primary{% else %}btn-outline-primary{% endif %}">All</a>
+            {% for category in categories %}
+                <a href="?category={{ category.slug }}" class="btn {% if selected_category == category.slug %}btn-primary{% else %}btn-outline-primary{% endif %}">{{ category.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% if posts %}
+        {% for post in posts %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    {% if post.featured_image %}
+                        <img src="{{ post.featured_image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ post.title }}">
+                    {% else %}
+                        <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                            <h3 class="text-white">📝</h3>
+                        </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <span class="badge bg-primary mb-2">{{ post.category.name }}</span>
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text text-muted">{{ post.get_summary_preview }}</p>
+                        <p class="card-text"><small class="text-muted">By Dr. {{ post.author.get_full_name }} • {{ post.created_at|date:"M d, Y" }}</small></p>
+                    </div>
+                    <div class="card-footer bg-white">
+                        <a href="{% url 'blog:blog_detail' post.slug %}" class="btn btn-primary btn-sm">Read More</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-md-12">
+            <div class="alert alert-info">No blog posts available.</div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}My Posts{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12 mb-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>My Blog Posts</h1>
+            <a href="{% url 'blog:blog_create' %}" class="btn btn-success">+ Create New Post</a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% if posts %}
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for post in posts %}
+                            <tr>
+                                <td>
+                                    <strong>{{ post.title }}</strong><br>
+                                    <small class="text-muted">{{ post.get_summary_preview }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary">{{ post.category.name }}</span>
+                                </td>
+                                <td>
+                                    {% if post.status == 'published' %}
+                                        <span class="badge bg-success">Published</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">Draft</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ post.created_at|date:"M d, Y" }}</td>
+                                <td>
+                                    {% if post.status == 'published' %}
+                                        <a href="{% url 'blog:blog_detail' post.slug %}" class="btn btn-sm btn-info" target="_blank">View</a>
+                                    {% endif %}
+                                    <a href="{% url 'blog:blog_update' post.slug %}" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="{% url 'blog:blog_delete' post.slug %}" class="btn btn-sm btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% else %}
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                You haven't created any posts yet. <a href="{% url 'blog:blog_create' %}">Create your first post</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
